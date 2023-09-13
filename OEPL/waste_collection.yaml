@@ -1,0 +1,186 @@
+alias: Update Bins Tag
+description: ""
+trigger:
+  - platform: time
+    at: "02:00:00"
+condition: []
+action:
+  - service: open_epaper_link.drawcustom
+    target:
+      entity_id: open_epaper_link.0000021ee1763b1a
+    data:
+      background: white
+      rotate: 0
+      payload:
+        - type: line
+          fill: red
+          width: 3
+          x_start: 5
+          y_start: 64
+          x_end: 121
+          y_end: 64
+        - type: line
+          fill: red
+          width: 3
+          x_start: 168
+          y_start: 64
+          x_end: 290
+          y_end: 64
+        - type: line
+          fill: red
+          width: 3
+          x_start: 148
+          y_start: 5
+          x_end: 148
+          y_end: 34
+        - type: line
+          fill: red
+          width: 3
+          x_start: 148
+          y_start: 89
+          x_end: 148
+          y_end: 123
+        - type: rectangle
+          outline: white
+          fill: >-
+            {{'white' if states('sensor.black_bin_schedule') == 'unknown' or
+            states('sensor.black_bin_schedule') | int > 1 else 'red' }}
+          width: 1
+          x_start: 5
+          y_start: 5
+          x_end: 123
+          y_end: 60
+        - type: text
+          value: Black
+          font: ppb.ttf
+          x: 35
+          "y": 10
+          size: 18
+          color: >-
+            {{'black' if states('sensor.black_bin_schedule') == 'unknown' or
+            states('sensor.black_bin_schedule') | int > 1 else 'white' }}
+        - type: text
+          value: >-
+            {% if states('sensor.black_bin_schedule') == 'unknown' %}Unknown{%
+            elif states('sensor.black_bin_schedule') | int == 0 %}Today{% elif
+            states('sensor.black_bin_schedule') | int == 1 %}Tonight{% else
+            %}{{states('sensor.black_bin_schedule')}} days{% endif %}
+          font: ppb.ttf
+          x: 35
+          "y": 33
+          size: 18
+          color: >-
+            {{'black' if states('sensor.black_bin_schedule') == 'unknown' or
+            states('sensor.black_bin_schedule') | int > 1 else 'white' }}
+        - type: rectangle
+          outline: white
+          fill: >-
+            {{'white' if states('sensor.blue_bin_schedule') == 'unknown' or
+            states('sensor.blue_bin_schedule') | int > 1 else 'red' }}
+          width: 1
+          x_start: 168
+          y_start: 5
+          x_end: 290
+          y_end: 60
+        - type: text
+          value: Blue
+          font: ppb.ttf
+          x: 190
+          "y": 10
+          size: 18
+          color: >-
+            {{'black' if states('sensor.blue_bin_schedule') == 'unknown' or
+            states('sensor.blue_bin_schedule') | int > 1 else 'white' }}
+        - type: text
+          value: >-
+            {% if states('sensor.blue_bin_schedule') == 'unknown' %}Unknown{%
+            elif states('sensor.blue_bin_schedule') | int == 0 %}Today{% elif
+            states('sensor.blue_bin_schedule') | int == 1 %}Tonight{% else
+            %}{{states('sensor.blue_bin_schedule')}} days{% endif %}
+          font: ppb.ttf
+          x: 190
+          "y": 33
+          size: 18
+          color: >-
+            {{'black' if states('sensor.blue_bin_schedule') == 'unknown' or
+            states('sensor.blue_bin_schedule') | int > 1 else 'white' }}
+        - type: rectangle
+          outline: white
+          fill: >-
+            {{'white' if states('sensor.brown_bin_schedule') == 'unknown' or
+            states('sensor.brown_bin_schedule') | int > 1 else 'red' }}
+          width: 1
+          x_start: 5
+          y_start: 70
+          x_end: 123
+          y_end: 123
+        - type: text
+          value: Brown
+          font: ppb.ttf
+          x: 35
+          "y": 80
+          size: 18
+          color: >-
+            {{'black' if states('sensor.brown_bin_schedule') == 'unknown' or
+            states('sensor.brown_bin_schedule') | int > 1 else 'white' }}
+        - type: text
+          value: >-
+            {% if states('sensor.brown_bin_schedule') == 'unknown' %}Unknown{%
+            elif states('sensor.brown_bin_schedule') | int == 0 %}Today{% elif
+            states('sensor.brown_bin_schedule') | int == 1 %}Tonight{% else
+            %}{{states('sensor.brown_bin_schedule')}} days{% endif %}
+          font: ppb.ttf
+          x: 35
+          "y": 103
+          size: 18
+          color: >-
+            {{'black' if states('sensor.brown_bin_schedule') == 'unknown' or
+            states('sensor.brown_bin_schedule') | int > 1 else 'white' }}
+        - type: rectangle
+          outline: white
+          fill: >-
+            {{'white' if states('sensor.green_bin_schedule') == 'unknown' or
+            states('sensor.green_bin_schedule') | int > 1 else 'red' }}
+          width: 1
+          x_start: 168
+          y_start: 70
+          x_end: 290
+          y_end: 123
+        - type: text
+          value: Green
+          font: ppb.ttf
+          x: 190
+          "y": 80
+          size: 18
+          color: >-
+            {{'black' if states('sensor.green_bin_schedule') == 'unknown' or
+            states('sensor.green_bin_schedule') | int > 1 else 'white' }}
+        - type: text
+          value: >-
+            {% if states('sensor.green_bin_schedule') == 'unknown' %}Unknown{%
+            elif states('sensor.green_bin_schedule') | int == 0 %}Today{% elif
+            states('sensor.green_bin_schedule') | int == 1 %}Tonight{% else
+            %}{{states('sensor.green_bin_schedule')}} days{% endif %}
+          font: ppb.ttf
+          x: 190
+          "y": 103
+          size: 18
+          color: >-
+            {{'black' if states('sensor.green_bin_schedule') == 'unknown' or
+            states('sensor.green_bin_schedule') | int > 1 else 'white' }}
+        - type: icon
+          value: trash-can
+          x: 123
+          "y": 39
+          size: 50
+          color: >-
+            {{ 'red' if (([(14 if states('sensor.black_bin_schedule') ==
+            'unknown' else states('sensor.black_bin_schedule') | int ),(14 if
+            states('sensor.blue_bin_schedule') == 'unknown' else
+            states('sensor.blue_bin_schedule') | int ),(14 if
+            states('sensor.green_bin_schedule') == 'unknown' else
+            states('sensor.green_bin_schedule') | int ),(14 if
+            states('sensor.brown_bin_schedule') == 'unknown' else
+            states('sensor.brown_bin_schedule') | int ) ]  ) | min )  < 2 else
+            'black' }}
+mode: single
