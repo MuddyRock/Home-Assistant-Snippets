@@ -2,6 +2,5 @@ This repository contains interesting code snippets from my Home Assistant instan
 
 Contents
 
-https://github.com/MuddyRock/Home-Assistant-Snippets/blob/main/Open%20E%20Paperlink%20-%20bins%20automation
+[https://github.com/MuddyRock/Home-Assistant-Snippets/blob/main/Open%20E%20Paperlink%20-%20bins%20automation](OEPL - automations and code which use the Open E Paper Link integration to send data to second-life Electronic Shelf Labels)
 
-An automation to update an OEPL tag to display when the bins are due to be collected.
