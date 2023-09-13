@@ -1,0 +1,27 @@
+- platform: waste_collection_schedule
+  name: Black Bin schedule
+  value_template: "{{value.daysTo}}"
+  details_format: upcoming
+  types:
+    - Black bin
+
+- platform: waste_collection_schedule
+  name: Blue Bin schedule
+  value_template: "{{value.daysTo}}"
+  details_format: upcoming
+  types:
+    - Blue bin
+
+- platform: waste_collection_schedule
+  name: Green Bin schedule
+  value_template: "{{value.daysTo}}"
+  details_format: upcoming
+  types:
+    - Green bin
+
+- platform: waste_collection_schedule
+  name: Brown Bin schedule
+  value_template: "{{value.daysTo}}"
+  details_format: upcoming
+  types:
+    - Brown bin
