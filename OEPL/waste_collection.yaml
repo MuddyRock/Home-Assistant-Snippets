@@ -169,6 +169,12 @@ action:
             {{'black' if states('sensor.green_bin_schedule') == 'unknown' or
             states('sensor.green_bin_schedule') | int > 1 else 'white' }}
         - type: icon
+          value: circle
+          x: 113
+          "y": 29
+          size: 70
+          color: white
+        - type: icon
           value: trash-can
           x: 123
           "y": 39
