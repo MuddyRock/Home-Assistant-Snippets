@@ -238,7 +238,7 @@ action:
           size: 70
           color: black
         - type: icon
-          value: circle
+          value: trash-can
           x: 123
           "y": 30
           size: 50
