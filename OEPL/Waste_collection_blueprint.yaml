@@ -44,6 +44,7 @@ blueprint:
           multiple: false
           filter:
             domain: sensor   
+
 alias: Update Bins Tag
 description: ""
 trigger:
@@ -65,7 +66,7 @@ variables:
   battery_tag: "sensor.{{ states[battery_entity].name }}_battery"
   rssi_entity: !input epaper_target
   rssi_tag: "sensor.{{ states[rssi_entity].name }}_rssi"
-  
+
 action:
   - service: open_epaper_link.drawcustom
     target:
@@ -106,14 +107,14 @@ action:
           outline: black
           fill: >-
             {{'black' if states(black_bin_entity) == 'unknown' or
-            states(black_bin_entity) | int > 1 else 'red' }}
+             states(black_bin_entity) | int > 1 else 'red' }}
           width: 1
           x_start: 5
           y_start: 3
           x_end: 144
           y_end: 52
         - type: text
-          value: "{{ states[icon_entity].name }}"
+          value: "{{ states[black_bin_entity].name }}"
           font: ppb.ttf
           x: 10
           "y": 8
@@ -310,4 +311,5 @@ action:
           "y": 114
           size: 13
           color: black
+
 mode: single
