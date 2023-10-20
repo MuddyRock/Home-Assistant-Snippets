@@ -205,7 +205,7 @@ sequence:
           size: 13
           color: "{{'black' if dark_mode else white}}"
         - type: text
-          value: "{{tag_batery_value | string}}%"
+          value: "{{tag_battery_value | string}}%"
           font: ppb.ttf
           x: 20
           "y": 114
