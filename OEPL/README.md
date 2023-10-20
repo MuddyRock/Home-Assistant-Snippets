@@ -3,9 +3,10 @@ This folder contains code used with the [Home Assistant OpenEPaperLink integrati
 Contents
 
 waste_collection_automation.yaml - An automation used with the [Waste Collection Schedule](https://github.com/mampfes/hacs_waste_collection_schedule) integration to display which bins (refuse cans) go out each day. Requires some sensors setting up in YAML. See the [sample file](./waste-collection-sample-sensors.yaml) for some examples.
-![The tag on the night the bin should go out (the day before they're emptied)](./bins_tag.jpg)
 
 waste_collection_script.yaml - The script called by the automation, which sends data to the tag.
+
+![The tag on the night the bin should go out (the day before they're emptied)](./bins_tag.jpg)
 
 The automation calls a script where the tag display is drawn and sends several parameters to the script. A full set of examples is in the automation. Parameters are:
 
