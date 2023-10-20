@@ -52,20 +52,20 @@ sequence:
           "y": 8
           size: 18
           color: >-
-            {{off_day_text if trash1_days == 'unknown' or trash1_days > 1 else
+            {{off_day_text if trash1_days == "unknown" or trash1_days > 1 else
             on_day_text }}
         - type: text
           value: >-
             {% if trash1_days | int == 999 %}{{translation_unknown}}{% elif
             trash1_days | int == 0 %}{{translation_today}}{% elif trash1_days |
-            int == 1 %}{{translation_tonight}}{% else
-            %}{{trash1_days}} {{translation_days}}{% endif %}
+            int == 1 %}{{translation_tonight}}{% else %}{{trash1_days}}
+            {{translation_days}}{% endif %}
           font: ppb.ttf
           x: 8
           "y": 33
           size: 18
           color: >-
-            {{off_day_text if trash1_days == 'unknown' or trash1_days > 1 else
+            {{off_day_text if trash1_days == "unknown"  or trash1_days > 1 else
             on_day_text }}
         - type: rectangle
           outline: "{{off_day_background}}"
@@ -84,14 +84,14 @@ sequence:
           "y": 8
           size: 18
           color: >-
-            {{off_day_text if trash2_days == 'unknown' or trash2_days > 1 else
+            {{off_day_text if trash2_days == "unknown" or trash2_days > 1 else
             on_day_text }}
         - type: text
           value: >-
             {% if trash2_days | int == 999 %}{{translation_unknown}}{% elif
             trash2_days | int == 0 %}{{translation_today}}{% elif trash2_days |
-            int == 1 %}{{translation_tonight}}{% else
-            %}{{trash2_days}} {{translation_days}}{% endif %}
+            int == 1 %}{{translation_tonight}}{% else %}{{trash2_days}}
+            {{translation_days}}{% endif %}
           font: ppb.ttf
           x: 180
           "y": 33
@@ -122,8 +122,8 @@ sequence:
           value: >-
             {% if trash3_days | int == 999 %}{{translation_unknown}}{% elif
             trash3_days | int == 0 %}{{translation_today}}{% elif trash3_days |
-            int == 1 %}{{translation_tonight}}{% else
-            %}{{trash3_days}} {{translation_days}}{% endif %}
+            int == 1 %}{{translation_tonight}}{% else %}{{trash3_days}}
+            {{translation_days}}{% endif %}
           font: ppb.ttf
           x: 10
           "y": 90
@@ -154,8 +154,8 @@ sequence:
           value: >-
             {% if trash4_days | int == 999 %}{{translation_unknown}}{% elif
             trash4_days | int == 0 %}{{translation_today}}{% elif trash4_days |
-            int == 1 %}{{translation_tonight}}{% else
-            %}{{trash4_days}} {{translation_days}}{% endif %}
+            int == 1 %}{{translation_tonight}}{% else %}{{trash4_days}}
+            {{translation_days}}{% endif %}
           font: ppb.ttf
           x: 180
           "y": 90
@@ -179,7 +179,7 @@ sequence:
             min ) | int < 2 else off_day_text }}
         - type: rectangle
           outline: red
-          fill: "{{'white' if dark_mode else off_day_background}}"
+          fill: "{{'white' if dark_mode else 'black'}}"
           width: 2
           x_start: 1
           y_start: 110
@@ -239,6 +239,10 @@ sequence:
           color: "{{'black' if dark_mode else white}}"
 icon: mdi:trash-can
 variables:
+  translation_today: "{{'Today' if translation_today is undefined else translation_today}}"
+  translation_tonight: "{{'Tonight' if translation_tonight is undefined else translation_tonight}}"
+  translation_days: "{{'days' if translation_days is undefined else translation_days}}"
+  translation_unknown: "{{'Unknown' if translation_unknown is undefined else translation_unknown}}"
   tag_mac: "{{ '0000021B4DA53B17' | lower if tag_mac is undefined else tag_mac | lower}}"
   tag_entity: "{{'open_epaper_link.' + tag_mac}}"
   tag_rssi_sensor: "{{'sensor.' + tag_mac + '_rssi'}}"
@@ -247,27 +251,27 @@ variables:
   tag_battery_value: "{{states(''''~tag_battery_sensor)}}"
   tag_temperature_sensor: "{{'sensor.' + tag_mac + '_temperature'}}"
   tag_temperature_value: "{{states(''''~tag_temperature_sensor)}}"
-  trash_sensor1: "{{'Unknown' if trash_sensor1 is undefined else trash_sensor1}}"
+  trash_sensor1: "{{translation_unknown if trash_sensor1 is undefined else trash_sensor1}}"
   trash1_days: >-
-    {%if trash_sensor1 == 'Unknown' or states(''''~trash_sensor1) == None or
+    {%if trash_sensor1 == translation_unknown or states(''''~trash_sensor1) == None or
     states(''''~trash_sensor1) == 'unknown'
     %}999{%else%}{{states(''''~trash_sensor1)}}{%endif%}
-  trash1_name: "{{'No Name' if trash1_name is undefined else trash1_name}}"
-  trash_sensor2: "{{'Unknown' if trash_sensor2 is undefined else trash_sensor2}}"
+  trash1_name: "{{translation_unknown if trash1_name is undefined else trash1_name}}"
+  trash_sensor2: "{{translation_unknown if trash_sensor2 is undefined else trash_sensor2}}"
   trash2_days: >-
-    {%if trash_sensor2 == 'Unknown' or states(''''~trash_sensor2) == None or
+    {%if trash_sensor2 == translation_unknown or states(''''~trash_sensor2) == None or
     states(''''~trash_sensor2) == 'unknown'
     %}999{%else%}{{states(''''~trash_sensor2)}}{%endif%}
   trash2_name: "{{'No Name' if trash2_name is undefined else trash1_name}}"
-  trash_sensor3: "{{'Unknown' if trash_sensor3 is undefined else trash_sensor3}}"
+  trash_sensor3: "{{translation_unknown if trash_sensor3 is undefined else trash_sensor3}}"
   trash3_days: >-
-    {%if trash_sensor3 == 'Unknown' or states(''''~trash_sensor3) == None or
+    {%if trash_sensor3 == translation_unknown or states(''''~trash_sensor3) == None or
     states(''''~trash_sensor3) == 'unknown'
     %}999{%else%}{{states(''''~trash_sensor3)}}{%endif%}
-  trash3_name: "{{'No Name' if trash3_name is undefined else trash3_name}}"
-  trash_sensor4: "{{'Unknown' if trash_sensor4 is undefined else trash_sensor4}}"
+  trash3_name: "{{translation_unknown if trash3_name is undefined else trash3_name}}"
+  trash_sensor4: "{{translation_unknown if trash_sensor4 is undefined else trash_sensor4}}"
   trash4_days: >-
-    {%if trash_sensor4 == 'Unknown' or states(''''~trash_sensor4) == None or
+    {%if trash_sensor4 == translation_unknown or states(''''~trash_sensor4) == None or
     states(''''~trash_sensor4) == 'unknown'
     %}999{%else%}{{states(''''~trash_sensor4)}}{%endif%}
   trash4_name: "{{'No Name' if trash4_name is undefined else trash4_name}}"
@@ -276,8 +280,4 @@ variables:
   on_day_background: red
   off_day_text: "{{'white' if dark_mode else 'black'}}"
   on_day_text: white
-  translation_today: "{{'Today' if translation_today is undefined else translation_today}}"
-  translation_tonight: "{{'Tonight' if translation_tonight is undefined else translation_tonight}}"
-  translation_days: "{{'days' if translation_days is undefined else translation_days}}"
-  translation_unknown: "{{'Unknown' if translation_unknown is undefined else translation_unknown}}"
 mode: single
