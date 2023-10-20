@@ -2,7 +2,7 @@ alias: Bins tag
 sequence:
   - service: open_epaper_link.drawcustom
     target:
-      entity_id: "{{'open_epaper_link.'+'0000021B4DA53B17'}}"
+      entity_id: "{{tag_entity}}"
     data:
       background: "{{ off_day_background }}"
       rotate: 0
