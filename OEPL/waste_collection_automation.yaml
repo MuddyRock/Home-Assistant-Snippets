@@ -1,0 +1,24 @@
+alias: Update Bins Tag
+description: ""
+trigger:
+  - platform: time
+    at: "02:00:00"
+condition: []
+action:
+  - service: script.bins_tag
+    data:
+      tag_mac: 0000021B4DA53B17
+      trash_sensor1: sensor.black_bin_schedule
+      trash1_name: Black
+      trash_sensor2: sensor.blue_bin_schedule
+      trash2_name: Blue
+      trash_sensor3: sensor.brown_bin_schedule
+      trash3_name: Brown
+      trash_sensor4: sensor.green_bin_schedule
+      trash4_name: Green
+      dark_mode: true
+      translation_today: Today
+      translation_tonight: Tonight
+      translation_days: days
+      translation_unknown: Unknown
+mode: single
