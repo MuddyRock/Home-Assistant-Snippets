@@ -191,52 +191,52 @@ sequence:
           x: 255
           "y": 114
           size: 13
-          color: "{{'black' if dark_mode else white}}"
+          color: "{{'black' if dark_mode else 'white'}}"
         - type: icon
           value: thermometer
           x: 240
           "y": 111
           size: 13
-          color: "{{'black' if dark_mode else white}}"
+          color: "{{'black' if dark_mode else 'white'}}"
         - type: icon
           value: battery-medium
           x: 3
           "y": 112
           size: 13
-          color: "{{'black' if dark_mode else white}}"
+          color: "{{'black' if dark_mode else 'white'}}"
         - type: text
           value: "{{tag_battery_value | string}}%"
           font: ppb.ttf
           x: 20
           "y": 114
           size: 13
-          color: "{{'black' if dark_mode else white}}"
+          color: "{{'black' if dark_mode else 'white'}}"
         - type: icon
           value: wifi
           x: 60
           "y": 111
           size: 13
-          color: "{{'black' if dark_mode else white}}"
+          color: "{{'black' if dark_mode else 'white'}}"
         - type: text
           value: "{{ tag_rssi_value | string }} dB"
           font: ppb.ttf
           x: 77
           "y": 114
           size: 13
-          color: "{{'black' if dark_mode else white}}"
+          color: "{{'black' if dark_mode else 'white'}}"
         - type: icon
           value: refresh
           x: 130
           "y": 111
           size: 13
-          color: "{{'black' if dark_mode else white}}"
+          color: "{{'black' if dark_mode else 'white'}}"
         - type: text
           value: "{{ states('sensor.time')}}"
           font: ppb.ttf
           x: 150
           "y": 114
           size: 13
-          color: "{{'black' if dark_mode else white}}"
+          color: "{{'black' if dark_mode else 'white'}}"
 icon: mdi:trash-can
 variables:
   translation_today: "{{'Today' if translation_today is undefined else translation_today}}"
@@ -262,7 +262,7 @@ variables:
     {%if trash_sensor2 == translation_unknown or states(''''~trash_sensor2) == None or
     states(''''~trash_sensor2) == 'unknown'
     %}999{%else%}{{states(''''~trash_sensor2)}}{%endif%}
-  trash2_name: "{{'No Name' if trash2_name is undefined else trash1_name}}"
+  trash2_name: "{{translation_unknown if trash2_name is undefined else trash2_name}}"
   trash_sensor3: "{{translation_unknown if trash_sensor3 is undefined else trash_sensor3}}"
   trash3_days: >-
     {%if trash_sensor3 == translation_unknown or states(''''~trash_sensor3) == None or
@@ -274,7 +274,7 @@ variables:
     {%if trash_sensor4 == translation_unknown or states(''''~trash_sensor4) == None or
     states(''''~trash_sensor4) == 'unknown'
     %}999{%else%}{{states(''''~trash_sensor4)}}{%endif%}
-  trash4_name: "{{'No Name' if trash4_name is undefined else trash4_name}}"
+  trash4_name: "{{translation_unknown if trash4_name is undefined else trash4_name}}"
   dark_mode: "{{true if dark_mode is undefined else dark_mode}}"
   off_day_background: "{{'black' if dark_mode else 'white'}}"
   on_day_background: red
