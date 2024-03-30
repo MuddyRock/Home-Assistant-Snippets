@@ -1,13 +1,13 @@
 This folder contains code used with the [Home Assistant OpenEPaperLink integration](https://github.com/jonasniesner/open_epaper_link_homeassistant) from @jonasniesner
 
-Contents
+## Files - for 4 bins
+[waste_collection_automation.yaml](waste_collection_automation.yaml) - An automation used with the [Waste Collection Schedule](https://github.com/mampfes/hacs_waste_collection_schedule) integration to display which bins (refuse cans) go out each day. Requires some sensors setting up in YAML. See the [sample file](./waste-collection-sample-sensors.yaml) for some examples.
 
-waste_collection_automation.yaml - An automation used with the [Waste Collection Schedule](https://github.com/mampfes/hacs_waste_collection_schedule) integration to display which bins (refuse cans) go out each day. Requires some sensors setting up in YAML. See the [sample file](./waste-collection-sample-sensors.yaml) for some examples.
-
-waste_collection_script.yaml - The script called by the automation, which sends data to the tag.
+[waste_collection_script.yaml](waste_collection_script.yaml) - The script called by the automation, which sends data to the tag.
 
 ![The tag on the night the bin should go out (the day before they're emptied)](./bins_tag.jpg)
 
+### Configuration
 The automation calls a script where the tag display is drawn and sends several parameters to the script. A full set of examples is in the automation. Parameters are:
 
       tag_mac: The MAC address of the tag to update
@@ -26,3 +26,14 @@ The automation calls a script where the tag display is drawn and sends several p
       translation_unknown: Translate the word "Unknown" into your language
 
 For a full write-up on how to implement the waste-collection tag, see [php-systems' blog](https://blog.php-systems.com/epaper-displays-and-waste-management/). Note that the code on that page might not be as up to date as the code in this repository.
+
+
+## Files - for more than 4 bins
+If you have more than 4 bins, you could have the tag display the next 4 upcoming ones, sorted by days until next pickup.
+This is a modification made by [@svenove](https://github.com/svenove), but is mostly reusing the same code of the 4-bins-version.
+
+PS: You could also use this if you have just 4 bins, but want them to be sorted by days until next pickup.
+
+[multi-bins/automation.yaml](multi-bins/automation.yaml) - An automation used with the [Waste Collection Schedule](https://github.com/mampfes/hacs_waste_collection_schedule) integration to display which bins (refuse cans) go out each day. Requires some sensors setting up in YAML. See the [sample file](./waste-collection-sample-sensors.yaml) for some examples.
+
+[multi-bins/script.yaml](multi-bins/script.yaml) - The script called by the automation, which sends data to the tag.
