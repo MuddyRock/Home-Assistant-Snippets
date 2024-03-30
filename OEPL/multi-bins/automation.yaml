@@ -1,0 +1,36 @@
+alias: ePaper - Waste Collection - multi-bins
+description: "@svenove, based on @MuddyRock: https://github.com/MuddyRock/Home-Assistant-Snippets/tree/main/OEPL"
+trigger:
+  - platform: time
+    at: "04:30:00"
+condition: []
+action:
+  - variables:
+      bins: >-
+        {% set bins_list = [
+          {'entity_id': 'sensor.trv_glass_metall', 'days': states('sensor.trv_glass_metall') | default(0) | float }, 
+          {'entity_id': 'sensor.trv_matavfall', 'days': states('sensor.trv_matavfall') | default(0) | float }, 
+          {'entity_id': 'sensor.trv_plastemballasje', 'days': states('sensor.trv_matavfall') | default(0) | float }, 
+          {'entity_id': 'sensor.trv_restavfall', 'days': states('sensor.trv_restavfall') | default(0) | float }, 
+          {'entity_id': 'sensor.trv_papppapir', 'days': states('sensor.trv_papppapir') | default(0) | float }] %}
+        {% set sorted_list=bins_list | sort(attribute='days') |
+        map(attribute='entity_id') | list %} {{ sorted_list }}
+  - service: script.bins_tag
+    data:
+      tag_mac: 0000021eccc03b18
+      dark_mode: false
+      translation_today: Today
+      translation_tonight: Tomorrow
+      translation_days: days
+      translation_unknown: Unknown
+      timeformat: "%H:%M"
+      weekdays:
+        - Mon
+        - Tue
+        - Wed
+        - Thu
+        - Fri
+        - Sat
+        - Sun
+      bins: "{{ bins }}"
+mode: single
