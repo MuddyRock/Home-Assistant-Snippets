@@ -1,6 +1,8 @@
-This folder contains code used with the [Home Assistant OpenEPaperLink integration](https://github.com/jonasniesner/open_epaper_link_homeassistant) from @jonasniesner
+This folder contains code used with the [Home Assistant OpenEPaperLink integration](https://github.com/OpenEPaperLink/Home_Assistant_Integration).
 
-Contents
+# Contents
+There are two versions:
+## Original version by @MuddyRock
 
 waste_collection_automation.yaml - An automation used with the [Waste Collection Schedule](https://github.com/mampfes/hacs_waste_collection_schedule) integration to display which bins (refuse cans) go out each day. Requires some sensors setting up in YAML. See the [sample file](./waste-collection-sample-sensors.yaml) for some examples.
 
@@ -26,3 +28,9 @@ The automation calls a script where the tag display is drawn and sends several p
       translation_unknown: Translate the word "Unknown" into your language
 
 For a full write-up on how to implement the waste-collection tag, see [php-systems' blog](https://blog.php-systems.com/epaper-displays-and-waste-management/). Note that the code on that page might not be as up to date as the code in this repository.
+
+## Modified version by [@svenove](https://github.com/svenove/)
+
+waste_automation_svenove.yaml - This version supports unlimited number of bins and will display the next 4 bins. It also requires at least v1.0.0 of the integration.
+
+To use this version, simply modify the variables and select the tag-device.
