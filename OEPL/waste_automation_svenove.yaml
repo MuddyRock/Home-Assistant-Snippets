@@ -1,0 +1,262 @@
+alias: ePaper - Waste collection
+description: >-
+  Based on MuddyRock's code, minor adjustments/improvements made by
+  github.com/svenove. Supports unlimited number of wastes and displays the 4 next ones in order.
+triggers:
+  - at: "05:30:00"
+    trigger: time
+conditions: []
+actions:
+  - variables:
+      bins: >-
+        {% set bins_list = [
+          {'entity_id': 'sensor.waste_food', 'days': states('sensor.waste_food') | default(0) | float }, 
+          {'entity_id': 'sensor.waste_plastic', 'days': states('sensor.waste_food') | default(0) | float },
+          {'entity_id': 'sensor.waste_glass_metal', 'days': states('sensor.waste_glass_metal') | default(0) | float }, 
+          {'entity_id': 'sensor.waste_general', 'days': states('sensor.waste_general') | default(0) | float }, 
+          {'entity_id': 'sensor.waste_paper', 'days': states('sensor.waste_paper') | default(0) | float }] %}
+        {% set sorted_list=bins_list | sort(attribute='days') |
+        map(attribute='entity_id') | list %} {{ sorted_list }}
+      dark_mode: false
+      translation_today: Today
+      translation_tonight: Tomorrow
+      translation_days: days
+      translation_unknown: Unknown
+      timeformat: "%H:%M"
+      weekdays:
+        - Mon
+        - Tue
+        - Wed
+        - Thu
+        - Fri
+        - Sat
+        - Sun
+    alias: Define config variables (edit to your needs)
+  - variables:
+      trash1_sensor: "{{translation_unknown if bins is undefined else bins[0]}}"
+      trash1_days: >-
+        {%if trash1_sensor == translation_unknown or states(''''~trash1_sensor)
+        == None or states(''''~trash1_sensor) == 'unknown'
+        %}999{%else%}{{states(''''~trash1_sensor)}}{%endif%}
+      trash1_name: >-
+        {{translation_unknown if trash1_sensor is undefined else
+        state_attr(trash1_sensor, 'friendly_name') }}
+      trash2_sensor: "{{translation_unknown if bins is undefined else bins[1]}}"
+      trash2_days: >-
+        {%if trash2_sensor == translation_unknown or states(''''~trash2_sensor)
+        == None or states(''''~trash2_sensor) == 'unknown'
+        %}999{%else%}{{states(''''~trash2_sensor)}}{%endif%}
+      trash2_name: >-
+        {{translation_unknown if trash2_sensor is undefined else
+        state_attr(trash2_sensor, 'friendly_name') }}
+      trash3_sensor: "{{translation_unknown if bins is undefined else bins[2]}}"
+      trash3_days: >-
+        {%if trash3_sensor == translation_unknown or states(''''~trash3_sensor)
+        == None or states(''''~trash3_sensor) == 'unknown'
+        %}999{%else%}{{states(''''~trash3_sensor)}}{%endif%}
+      trash3_name: >-
+        {{translation_unknown if trash3_sensor is undefined else
+        state_attr(trash3_sensor, 'friendly_name') }}
+      trash4_sensor: "{{translation_unknown if bins is undefined else bins[3]}}"
+      trash4_days: >-
+        {%if trash4_sensor == translation_unknown or states(''''~trash4_sensor)
+        == None or states(''''~trash4_sensor) == 'unknown'
+        %}999{%else%}{{states(''''~trash4_sensor)}}{%endif%}
+      trash4_name: >-
+        {{translation_unknown if trash4_sensor is undefined else
+        state_attr(trash4_sensor, 'friendly_name') }}
+      off_day_background: "{{'black' if dark_mode else 'white'}}"
+      on_day_background: red
+      off_day_text: "{{'white' if dark_mode else 'black'}}"
+      on_day_text: white
+    alias: Create variables needed later (no need to change manually)
+  - action: open_epaper_link.drawcustom
+    metadata: {}
+    data:
+      background: "{{ off_day_background }}"
+      rotate: 0
+      dry-run: false
+      ttl: 60
+      payload:
+        - type: line
+          fill: red
+          width: 3
+          x_start: 5
+          y_start: 56
+          x_end: 121
+          y_end: 56
+        - type: line
+          fill: red
+          width: 3
+          x_start: 168
+          y_start: 56
+          x_end: 290
+          y_end: 56
+        - type: line
+          fill: red
+          width: 3
+          x_start: 148
+          y_start: 3
+          x_end: 148
+          y_end: 34
+        - type: line
+          fill: red
+          width: 3
+          x_start: 148
+          y_start: 60
+          x_end: 148
+          y_end: 110
+        - type: rectangle
+          outline: "{{off_day_background}}"
+          fill: >-
+            {{off_day_background if trash1_days | int > 1 else on_day_background
+            }}
+          width: 1
+          x_start: 5
+          y_start: 3
+          x_end: 144
+          y_end: 52
+        - type: text
+          value: "{{trash1_name}}"
+          font: ppb.ttf
+          x: 10
+          "y": 8
+          size: 18
+          color: >-
+            {{off_day_text if trash1_days == "unknown" or trash1_days > 1 else
+            on_day_text }}
+        - type: text
+          value: >-
+            {% if trash1_days | int == 999 %}{{translation_unknown}}{% elif
+            trash1_days | int == 0 %}{{translation_today}}{% elif trash1_days |
+            int == 1 %}{{translation_tonight}}{% else %}{{trash1_days}}
+            {{translation_days}}{% endif %}
+          font: ppb.ttf
+          x: 8
+          "y": 33
+          size: 18
+          color: >-
+            {{off_day_text if trash1_days == "unknown"  or trash1_days > 1 else
+            on_day_text }}
+        - type: rectangle
+          outline: "{{off_day_background}}"
+          fill: >-
+            {{off_day_background if trash2_days | int > 1 else on_day_background
+            }}
+          width: 1
+          x_start: 152
+          y_start: 3
+          x_end: 290
+          y_end: 52
+        - type: text
+          value: "{{trash2_name}}"
+          font: ppb.ttf
+          x: 180
+          "y": 8
+          size: 18
+          color: >-
+            {{off_day_text if trash2_days == "unknown" or trash2_days > 1 else
+            on_day_text }}
+        - type: text
+          value: >-
+            {% if trash2_days | int == 999 %}{{translation_unknown}}{% elif
+            trash2_days | int == 0 %}{{translation_today}}{% elif trash2_days |
+            int == 1 %}{{translation_tonight}}{% else %}{{trash2_days}}
+            {{translation_days}}{% endif %}
+          font: ppb.ttf
+          x: 180
+          "y": 33
+          size: 18
+          color: >-
+            {{off_day_text if trash2_days == 'unknown' or trash2_days > 1 else
+            on_day_text }}
+        - type: rectangle
+          outline: "{{off_day_background}}"
+          fill: >-
+            {{off_day_background if trash3_days | int > 1 else on_day_background
+            }}
+          width: 1
+          x_start: 5
+          y_start: 60
+          x_end: 144
+          y_end: 107
+        - type: text
+          value: "{{trash3_name}}"
+          font: ppb.ttf
+          x: 10
+          "y": 70
+          size: 18
+          color: >-
+            {{off_day_text if trash3_days == 'unknown' or trash3_days > 1 else
+            on_day_text }}
+        - type: text
+          value: >-
+            {% if trash3_days | int == 999 %}{{translation_unknown}}{% elif
+            trash3_days | int == 0 %}{{translation_today}}{% elif trash3_days |
+            int == 1 %}{{translation_tonight}}{% else %}{{trash3_days}}
+            {{translation_days}}{% endif %}
+          font: ppb.ttf
+          x: 10
+          "y": 90
+          size: 18
+          color: >-
+            {{off_day_text if trash3_days == 'unknown' or trash3_days > 1 else
+            on_day_text }}
+        - type: rectangle
+          outline: "{{off_day_background}}"
+          fill: >-
+            {{off_day_background if trash4_days | int > 1 else on_day_background
+            }}
+          width: 1
+          x_start: 152
+          y_start: 60
+          x_end: 290
+          y_end: 107
+        - type: text
+          value: "{{trash4_name}}"
+          font: ppb.ttf
+          x: 180
+          "y": 70
+          size: 18
+          color: >-
+            {{off_day_text if trash4_days == 'unknown' or trash4_days > 1 else
+            on_day_text }}
+        - type: text
+          value: >-
+            {% if trash4_days | int == 999 %}{{translation_unknown}}{% elif
+            trash4_days | int == 0 %}{{translation_today}}{% elif trash4_days |
+            int == 1 %}{{translation_tonight}}{% else %}{{trash4_days}}
+            {{translation_days}}{% endif %}
+          font: ppb.ttf
+          x: 180
+          "y": 90
+          size: 18
+          color: >-
+            {{off_day_text if trash4_days == 'unknown' or trash4_days > 1 else
+            on_day_text }}            
+        - type: icon
+          value: circle
+          x: 113
+          "y": 20
+          size: 70
+          color: "{{off_day_background}}"
+        - type: icon
+          value: trash-can
+          x: 123
+          "y": 30
+          size: 50
+          color: >-
+            {{ 'red' if (([trash1_days,trash2_days,trash3_days,trash4_days ]) |
+            min ) | int < 2 else off_day_text }}
+        - type: text
+          value: >-
+            {{weekdays[now().weekday()]}}
+            {{(now()|as_timestamp)|timestamp_custom(timeformat, True) }}
+          font: ppb.ttf
+          x: 118
+          "y": 116
+          size: 11
+          color: "{{'white' if dark_mode else 'black'}}"
+    target:
+      device_id: ba56e483633928becad9345c18321a0d
+mode: restart
